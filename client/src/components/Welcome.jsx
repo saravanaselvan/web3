@@ -9,7 +9,7 @@ import { shortenAddress } from "../utils/shortenAddress";
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
-const Input = ({ placeholder, name, type, value, handleChange }) => (
+const Input = ({ placeholder, name, type, value, handleChange, disabled }) => (
   <input
     placeholder={placeholder}
     type={type}
@@ -17,6 +17,7 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
     value={value}
     onChange={(e) => handleChange(e, name)}
     className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none white-glassmorphism"
+    disabled={disabled}
   />
 );
 const Welcome = () => {
@@ -28,10 +29,9 @@ const Welcome = () => {
     sendTransaction,
     isLoading,
   } = useContext(TransactionContext);
+  const { addressTo, amount, keyword, message } = formData;
 
   const handleSubmit = (e) => {
-    const { addressTo, amount, keyword, message } = formData;
-
     e.preventDefault();
 
     if (!addressTo || !amount || !keyword || !message) return;
@@ -94,25 +94,33 @@ const Welcome = () => {
             placeholder="Address To"
             name="addressTo"
             type="text"
+            value={addressTo}
             handleChange={handleChange}
+            disabled={isLoading}
           />
           <Input
             placeholder="Amount (ETH)"
             name="amount"
             type="number"
+            value={amount}
             handleChange={handleChange}
+            disabled={isLoading}
           />
           <Input
             placeholder="Keyword (Gif)"
             name="keyword"
             type="text"
+            value={keyword}
             handleChange={handleChange}
+            disabled={isLoading}
           />
           <Input
             placeholder="Enter Message"
             name="message"
             type="text"
+            value={message}
             handleChange={handleChange}
+            disabled={isLoading}
           />
           <div className="h-[1px] w-full bg-gray-400 my-2"></div>
 

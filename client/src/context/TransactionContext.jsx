@@ -100,6 +100,7 @@ export const TransactionProvider = ({ children }) => {
       });
 
       setCurrentAccount(accounts[0]);
+      getAllTransactions();
     } catch (error) {
       console.log(error);
     }
@@ -136,10 +137,16 @@ export const TransactionProvider = ({ children }) => {
       await transactionHash.wait();
       setIsLoading(false);
       console.log(`Loading - ${transactionHash.hash}`);
-
+      setFormData({
+        addressTo: "",
+        amount: "",
+        keyword: "",
+        message: "",
+      });
       const transactionCount = await transactionContract.getTransactionCount();
 
       setTransactionCount(transactionCount.toNumber());
+      getAllTransactions();
     } catch (error) {
       console.log(error);
       throw new Error("No ethereum object.");
